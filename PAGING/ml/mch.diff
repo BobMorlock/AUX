@@ -1,0 +1,170 @@
+2c2
+<  #	@(#)%M%	UniPlus V.2.%I%
+---
+>  #	@(#)mch.s	UniPlus V.2.1.2
+156c156,158
+< 	jsr	fpresume		# save the state of fp and COPYSEG
+---
+> #ifdef FLOAT
+>  	jsr	fpresume		# save the state of fp and COPYSEG
+> #endif FLOAT
+162c164
+< 	mov.l	&8,%d0
+---
+> 	mov.l	&8-1,%d0
+164,166c166
+< 	sub.l	&1,%d0
+< 	bne	LS%89
+< 
+---
+> 	dbra	%d0,LS%89
+191a192
+> #ifdef CLR_CACHE
+192a194
+> 	jsr	clr_cache
+193a196
+> #endif CLR_CACHE
+251d253
+< waitloc:			# Pseudo location addr used by kernel profiling
+252a255
+> waitloc:			# Pseudo location addr used by kernel profiling
+264c267
+< 	bne	LS%120			# no, don't trash kernel sp
+---
+> 	bne	LS%100			# no, don't trash kernel sp
+267c270
+< LS%120:
+---
+> LS%100:
+273a277
+> #ifdef NOTDEF
+274a279
+> #endif NOTDEF
+284c289
+< 	bne	LS%122			# no, don't trash kernel sp
+---
+> 	bne	LS%103			# no, don't trash kernel sp
+287c292
+< LS%122:
+---
+> LS%103:
+302a308
+> #ifdef NOTDEF
+303a310
+> #endif NOTDEF
+316a324
+> #ifdef NOTDEF
+317a326
+> #endif NOTDEF
+332a342
+> #ifdef NOTDEF
+333a344
+> #endif NOTDEF
+396c407
+< 	beq	norecover%
+---
+> 	beq	norecover
+441c452
+< 	bne	LS%102			# no, don't trash kernel sp
+---
+> 	bne	LS%101			# no, don't trash kernel sp
+444,447c455,474
+< LS%102:
+< 	jsr	hardflt
+< 	tst.l	%d0			# did hardflt() succeed?
+< 	bne	norecover%		# if not, call trap
+---
+> LS%101:
+> 	cmp.w	cputype%,&2
+> 	beq	LS%60			#
+> 	mov.w	78(%sp),%d0		# 68010 Special Status Word
+> 	ext.l	%d0
+> 	mov.l	80(%sp),%d1		# 68010 Fault Address
+> 	bra	LS%70
+> LS%60:					# 68020
+> 	#jsr	fl_atc			# clear bus error by flushing ATC
+> 	#mov.w	80(%sp),%d0		# 68020 Special Status Word
+> 	#ext.l	%d0
+> 	#mov.l	%sp,%d0			# fault frame address
+> 	#mov.l	86(%sp),%d1		# 68020 Fault Address
+> LS%70:
+> 	#mov.l	%d0,-(%sp)		# Special Status Word
+> 	#mov.l	%d1,-(%sp)		# Fault Address
+> 	jsr	hardflt			# hardflt(vaddr, &lbuserr)
+> 	#add.l	&8,%sp
+> 	tst.l	%d0
+> 	bne	LS%8			# call trap
+449c476
+< 	bne	LS%104			# no, don't trash kernel sp
+---
+> 	bne	LS%102			# no, don't trash kernel sp
+452c479
+< LS%104:
+---
+> LS%102:
+457,460c484,485
+< norecover%:
+< 					# see if stack cleanup is needed
+< 					# (user handler may not have used last
+< 					# buserr frame after catching SIGSEGV)
+---
+> norecover:
+> LS%8:
+462,493c487
+< 	bne	LS%114			# no, just continue
+< 	cmp.w	cputype%,&1		# get size of stack frame in d0
+< 	bne	LS%106
+< 	mov.l	&58+70,%d0		# size of 68010 stack frame + regs
+< 	bra	LS%110
+< LS%106:					# 68020 stack frame
+< 	btst	&4,76(%sp)		#   is this a long buserr stack frame?
+< 	bne	LS%108
+< 	mov.l	&32+70,%d0		#   size of short buserr frame + regs
+< 	bra	LS%110
+< LS%108: mov.l	&92+70,%d0		#   size of long buserr frame + regs
+< LS%110:
+< 	mov.l	&UDOT+UDOTSIZE%-8,%a0	# stack bottom (8 bytes fudge factor)
+< 	sub.l	%d0,%a0			# top of first buserr frame
+< 	cmp.l	%sp,%a0			# is stack clean up needed
+< 	bhi     LS%114			#   if not, get out
+< 
+< 	mov.l	%sp,%a0
+< 	add.l	%d0,%a0			# source copy location
+< 	mov.l	&UDOT+UDOTSIZE%-4,%a1	# destination copy location
+< LS%112:	mov.b	-(%a0),-(%a1)		# stack frame copy loop
+< 	cmp.l	%a0,%sp
+< 	bhi	LS%112
+< 	mov.l	%a1,%sp			# adjust stack pointer
+< 	nop			#debug
+< 	nop			#debug
+< 	nop			#debug
+< 
+< LS%114:					# make stack look like we're coming
+< 					#   from lfault%
+< 	btst	&5,70(%sp)		# did we come from user mode?
+< 	bne	LS%116			# no, don't trash kernel sp
+---
+> 	bne	LS%104			# no, don't trash kernel sp
+496c490
+< LS%116:
+---
+> LS%104:
+498a493
+> LS%9:
+518a514
+> #ifdef NOTDEF
+519a516
+> #endif NOTDEF
+532,543d528
+< 
+< 	# General purpose code
+< 
+< 	global	getusp,getsr
+< 
+< getusp:	mov.l	%usp,%a0		# get the user stack pointer
+< 	mov.l	%a0,%d0
+< 	rts	
+< 
+< getsr:	mov.l	&0,%d0			# get the sr
+< 	mov.w	%sr,%d0
+< 	rts	

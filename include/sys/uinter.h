@@ -1,0 +1,291 @@
+/*	@(#)uinter.h	UniPlus VVV.2.1.2	*/
+
+/*
+ *	System configuration constants
+ */
+
+#define	NLAYERS	20	/* number of layers/device */
+#define	NEVENTS	32	/* number of events/layer */
+
+/*
+ *	User interface 'driver' ioctls etc
+ */
+
+#define	UI_SET		_IO(Q,0)	/* set the a-line trap handler */
+#define	UI_CLEAR	_IO(Q,1)	/* clear the a-line trap handler */
+#define	UI_SCREEN	_IO(Q,2)	/* phys in the screen (phys #3) 
+					   1 parameter - virtual address
+					   on a segment boundary */
+#define	UI_UNSCREEN	_IO(Q,3)	/* unphys in the screen (phys #3) */
+#define	UI_ROM		_IO(Q,4)	/* phys in the ROM (phys #2) 
+					   1 parameter - virtual address
+					   on a segment boundary */
+#define	UI_UNROM	_IO(Q,5)	/* unphys in the ROM (phys #2) */
+#define	UI_MAP		_IO(Q,6)	/* map in and lock down a page
+					   in a shared memory segment
+					   to be used for cursor stuff
+					   max of 1 page per 'device'
+					   open */
+#define	UI_UNMAP	_IO(Q,7)	/* undo this */
+#define	UI_CURSOR	_IO(Q,8)	/* start display of cursor on vertical
+					   retrace */
+#define	UI_UNCURSOR	_IO(Q,9)	/* turn it back off */
+#define	UI_TICKCOUNT	_IOR(Q,10,long)	/* return the number of ticks since
+					   booting */
+#define	UI_DELAY	_IOWR(Q,11,long)/* delay n ticks and return the
+					   number of ticks since booting */
+#define	UI_DAEMON	_IO(Q,12)	/* return when the daemon needs to
+					   be woken */
+#define	UI_POSTEVENT	_IOW(Q,13,struct postevent)/* post an event to our
+						      layer */
+#define	UI_LPOSTEVENT	_IOW(Q,14,struct lpostevent)/* post an event to a
+						       named layer */
+#define	UI_FLUSHEVENTS	_IOW(Q,15,struct flushevents)/* flush events from
+						        our layer */
+#define	UI_GETOSEVENT	_IOWR(Q,16,struct getosevent)	/* get an event */
+#define	UI_OSEVENTAVAIL	_IOWR(Q,17,struct oseventavail)/* look for available
+							  events */
+#define	UI_SETEVENTMASK	_IOW(Q,18,short)/* set the layer event mask */
+#define	UI_CREATELAYER	_IO(Q,19)	/* create a layer */
+#define	UI_DETACHLAYER	_IO(Q,20)	/* leave a layer */
+#define	UI_ATTACHLAYER	_IOW(Q,21,int)	/* join a layer */
+#define	UI_SETLAYER	_IOW(Q,22,int)	/* set the currently active layer */
+#define	UI_DEVICES	_IO(Q,23)	/* turn the keyboard/mouse on */
+#define	UI_UNDEVICES	_IO(Q,24)	/* turn the keyboard/mouse off */
+
+/*
+ *	Defines for eventmanager stuff
+ */
+
+#ifndef mouseDown
+#define	nullEvent	0	/* null */
+#define	mouseDown	1	/* mouse-down */
+#define	mouseUp		2	/* mouse-up */
+#define	keyDown		3	/* key-down */
+#define	keyUp		4	/* key-up */
+#define	autoKey		5	/* auto-key */
+#define	updateEvt	6	/* update; toolbox only */
+#define	diskEvt		7	/* disk-inserted */
+#define	activateEvt	8	/* activate; toolbox only */
+#define	networkEvt	10	/* network */
+#define	driverEvt	11	/* device driver */
+#define	app1Evt		12	/* application-defined */
+#define	app2Evt		13	/* application-defined */
+#define	app3Evt		14	/* application-defined */
+#define	app4Evt		15	/* application-defined */
+
+#define charCodeMask	0x000000ff 	/* character code */
+#define keyCodeMask	0x0000ff00 	/* key code */
+
+#define	mDownMask		0x0002	/* mouse-down */
+#define	mUpMask			0x0004	/* mouse-up */
+#define	keyDownMask		0x0008	/* key-down */
+#define	keyUpMask		0x0010	/* key-up */
+#define	autoKeyMask		0x0020	/* auto-key */
+#define	updateMask		0x0040	/* update; toolbox only */
+#define	diskMask		0x0080	/* disk-inserted */
+#define	activMask		0x0100	/* activate; toolbox only */
+#define	networkMask		0x0400	/* network */
+#define	driverMask		0x0800	/* device driver */
+#define	app1Mask		0x1000	/* application-defined */
+#define	app2Mask		0x2000	/* application-defined */
+#define	app3Mask		0x4000	/* application-defined */
+#define	app4Mask		0x8000	/* application-defined */
+
+#define	everyEvent		0xffff	/* all events */
+
+#define	mouseMoveMask		0x10000	/* used internally */
+
+/*
+ *	Modifiers
+ */
+
+#define	activeFlag		0x0001	/* set if window being activated */
+#define	btnState		0x0080	/* set if mouse button up */
+#define	cmdKey			0x0100	/* set if command key down */
+#define	shiftKey		0x0200	/* set if shift key down */
+#define	alphaLock		0x0400	/* set if caps lock key down */
+#define	optionKey		0x0800	/* set if option key down */
+#define cntlKey			0x0040	/* set if control key is down */
+
+#define	noErr			0x0000	/* no error (event posted) */
+#define	evtNotEnb		0x0001	/* event type not designated in layer
+					   event mask */
+typedef struct {
+	short	y;
+	short	x;
+} Point;
+
+typedef struct {
+	unsigned short		what;	/* event code */
+	unsigned long		message;/* event message */
+	unsigned long		when;	/* ticks since startup */
+	Point			where;	/* mouse location */
+	unsigned short		modifiers; /* modifier flags */
+} EventRecord;
+
+#endif mouseDown
+
+/*
+ *	Parameters for ioctls
+ */
+
+struct postevent {
+	unsigned short	eventCode;
+	unsigned long	eventMsg;
+};
+
+struct lpostevent {
+	unsigned short	layer;
+	unsigned short	eventCode;
+	unsigned long	eventMsg;
+};
+
+struct flushevents {
+	short		eventMask;
+	short		stopMask;
+};
+
+struct getosevent {
+	short		blocking;
+	short		eventMask;
+	EventRecord	theEvent;
+};
+
+/*
+ *	Values for 'blocking' 
+ */
+
+#define NOBLOCK		0	/* don't block, return instead */
+#define MBLOCK		1	/* block until the mouse moves */
+#define BLOCK		2	/* always block */
+#define AVAIL		3	/* don't block or remove event */
+
+/* #ifdef KERNEL */
+struct oseventavail {
+	short		eventMask;
+	EventRecord	theEvent;
+};
+
+/*
+ *	An event descriptor
+ */
+
+struct event {
+	struct event 		*next;	/* next event in the list */
+	EventRecord		event;	/* the event record */
+};
+
+/*
+ *	A layer structure descriptor
+ */
+
+struct layer {
+	int		l_ref;		/* goes to 0 when the layer is
+					   unreferenced */
+	unsigned char	l_down;		/* true when a char down is found */
+	char		l_char;		/* the char that is down */
+	char		l_update;	/* an update event is waiting */
+	char		l_mouse;	/* a mouse movement has occured */
+	long		l_time;		/* the time the char will be repeated
+					   at */
+	struct event	*l_first;	/* first event in the list */
+	struct event	*l_last;	/* last event in the list */
+	struct event	*l_free;	/* first free entry in the list */
+	struct layer	*l_prev;	/* prev layer in the 'active' list */
+	struct layer	*l_next;	/* next layer in the 'active' list */
+	long		l_mask;		/* layer event mask */
+	long		l_sleep;	/* events being slept for */
+	struct proc	*l_select;	/* events being selected */
+	long		l_tid;		/* timeout id ... required for V.3 */
+	struct event	l_events[NEVENTS];/* The event queue */
+};
+
+/* #endif KERNEL */
+
+/*
+ *	Layer states
+ */
+
+#define	LS_EMPTY	0	/* available */
+#define	LS_DONE		1	/* finished with (the daemon will put
+				   our state back to EMPTY) */
+#define	LS_INUSE	2	/* someone is using it */
+
+struct c_layer{			/* This structure contains layer data */
+				/* that may be accessed from kernel */
+				/* or user data space */
+
+				/* Note:  The aline trap handler */
+				/* routine expects the next 2 fields */
+				/* to be in order */
+	caddr_t		c_aline;  /* address of aline trap handler */
+	caddr_t		c_return; /* return address after aline */
+	unsigned char 	c_state;  /* The layer states */
+};
+
+/*
+ *	Warning: offsets in this data structure are referenced in
+ *		 uinters.s
+ */
+
+struct ui_interface {
+	unsigned long	c_mx;	/* x mouse position */
+	unsigned long	c_my;	/* y mouse position */
+	unsigned long	c_cx;	/* x cursor position */
+	unsigned long	c_cy;	/* y cursor position */
+	unsigned long	c_smx;	/* x screen row size in pixels */
+	unsigned long	c_smy;	/* y screen row size in pixels */
+	unsigned long	c_ssx;	/* x visible screen size in pixels */
+	unsigned long	c_ssy;	/* y visible screen size in pixels */
+	unsigned long	c_hpx;	/* x mouse hotpoint offset */
+	unsigned long	c_hpy;	/* y mouse hotpoint offset */
+	union cursor {
+		short small1[16*16/16];	/* 0: 16x16 cursor 1 b/p*/
+		long small2[16*16*2/32];/* 1: 16x16 cursor 2 b/p */
+		long small4[16*16*4/32];/* 2: 16x16 cursor 4 b/p */
+		long small8[16*16*8/32];/* 3: 16x16 cursor 8 b/p */
+	}		c_cursor;	/* cursor data */
+	union cursor	c_data;		/* what was under the cursor */
+	unsigned short	c_mask[16];	/* the cursor mask */
+	unsigned char	c_saved;	/* cursor data is saved */
+	unsigned char	c_visible;	/* cursor visibility */
+	unsigned char	c_style;	/* cursor style (large/small) (1/8) */
+	unsigned char	c_draw;		/* force the system to draw */
+	unsigned long	c_lock;		/* cursor lock */
+	unsigned long	c_exitpid;	/* exited processes pid */
+	unsigned char	c_button;	/* current mouse button state */
+	unsigned short	c_modifiers;	/* command modifiers */
+	unsigned short	c_mlookup[10];	/* mouse lookup table */
+	unsigned short	c_keythres;	/* auto key threshold (in ticks) */
+	unsigned short  c_keyrate;	/* auto key rate (in ticks) */
+	unsigned char	c_active;	/* The current active layer */
+	char		c_key[128];	/* Current key states (layer nums) */
+	struct c_layer	c_layer[NLAYERS];/* Layer status */
+	/* XXX - from FEB7 ui_interface struct... - XXX */
+	unsigned char 	c_lstate[NLAYERS];/* The layer states */
+};
+
+/*
+ *	Cursor styles
+ */
+
+#define	CUR_SMALL1	0		/* 0: 16x16 cursor 1 b/p */
+#define	CUR_SMALL2	1		/* 1: 16x16 cursor 2 b/p */
+#define	CUR_SMALL4	2		/* 2: 16x16 cursor 4 b/p */
+#define	CUR_SMALL8	3		/* 3: 16x16 cursor 8 b/p */
+
+/*
+ *	These defines are for picking apart the word in the UDOT that
+ *	specifies which device, and which layer the process is attached
+ *	to
+ */
+
+#define	UI_FLAG		0x8000		/* This process is attached to a
+					   user interface */
+#define	UI_DEVICE(x)	(((x)>>8)&0x7f)	/* The user interface device we are
+					   connected to */
+#define	UI_DL(x)	(((x)<<8)&0x7f00)/* the inverse of above */
+#define	UI_LAYER(x)	((x)&0xff)	/* The user interface layer we are
+					   connected to */
+#define NOLAYER 	0xff		/* no layer */

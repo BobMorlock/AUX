@@ -1,0 +1,67 @@
+	/bin/cc \
+	-I.		 -I/usr/src/usr/include -I23s -c \
+		-DSYS=\"`expr unix : '\(.\{1,8\}\)'`\" \
+		-DNODE=\"`expr psn-pmmu : '\(.\{1,8\}\)'`\" \
+		-DREL=\"`expr 5.2 : '\(.\{1,8\}\)'`\" \
+		-DVER=\"`expr rl : '\(.\{1,8\}\)'`\" \
+		-DMACH=\"`expr mc68020 : '\(.\{1,8\}\)'`\" \
+		-DTIMESTAMP="\"`date`\"" \
+		23s/sys/PAGING/cf/name.c
+	loading unix
+	/usr/bin/patch_kernel unix 
+	/bin/size -x unix
+
+
+Size of unix:  0x5c15c
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002db0      0x00000500         0x00000500
+	.text        0x000358cc      0x00004000         0x10000000
+	.data        0x0000eb30      0x0003a000         0x11000000
+	.bss         0x00014bb0      0x0004a000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/bin/nm -xev unix > unix.sym
+	loading bnetunix
+	/usr/bin/patch_kernel bnetunix 
+	/bin/size -x bnetunix
+
+
+Size of bnetunix:  0x6fea0
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002da4      0x00000500         0x00000500
+	.text        0x00043618      0x00004000         0x10000000
+	.data        0x0000f384      0x00048000         0x11000000
+	.bss         0x0001a360      0x00058000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/kudp_fsend.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/rpc_prot.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/subr_kudp.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/svc.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/svc_auth.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/svc_auth_u.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/svc_kudp.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/xdr.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/xdr_array.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/xdr_mbuf.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/xdr_mem.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/xdr_ref.c
+	loading nfs.o
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/psn/cf/nfsconf.c
+	loading nfsunix
+	/usr/bin/patch_kernel nfsunix 
+	/bin/size -x nfsunix
+
+
+Size of nfsunix:  0x79694
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002d7c      0x00000500         0x00000500
+	.text        0x0004bcc8      0x00004000         0x10000000
+	.data        0x0001021c      0x00050000         0x11000000
+	.bss         0x0001a634      0x00062000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/bin/nm -xev nfsunix > nfsunix.sym

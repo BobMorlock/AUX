@@ -1,0 +1,10 @@
+for i in $*
+do
+sed -n "
+	/^[ 	]*struct[ 	]*[A-Za-z_][A-Za-z0-9_]*[ 	][ 	]*[A-Za-z0-9_*]/d
+	/^[ 	]*struct[ 	]*[A-Za-z_][A-Za-z0-9_]*[ 	]*/{
+	s@[ 	]*struct[ 	]*\([^ 	]*\).*@\1	${i}	?^&\$?@
+		p
+	}
+"	<$i
+done | sort

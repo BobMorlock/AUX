@@ -1,0 +1,33 @@
+/*	@(#)linea.c	UniPlus VVV.2.1.3	*/
+/*
+ *	This routine is the 'high level' a-line trap handler ... see 
+ *		*ivec.s for the rest of this code.
+ */
+
+#include <sys/param.h>
+#include <sys/types.h>
+#include <sys/signal.h>
+#include <sys/errno.h>
+#include <sys/dir.h>
+#include <sys/mmu.h>
+#include <sys/time.h>
+#include <sys/page.h>
+#include <sys/seg.h>
+#include <sys/user.h>
+#include <sys/reg.h>
+
+#ifdef PMMU
+long
+lineA(ap)
+register struct args *ap;
+{
+	if (u.u_user[0]) {
+		ap->a_regs[SP] -= sizeof(char *);
+		if(suword(ap->a_regs[SP], ap->a_pc) == 0) {
+			ap->a_pc = (caddr_t)u.u_user[0];
+			return;
+		}
+	}
+	lineAfault(ap);
+}
+#endif PMMU

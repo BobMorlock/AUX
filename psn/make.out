@@ -1,0 +1,55 @@
+	/bin/cc \
+	-I.		 -I/usr/src/usr/include -I23s -c \
+		-DSYS=\"`expr unix : '\(.\{1,8\}\)'`\" \
+		-DNODE=\"`expr psn-pmmu : '\(.\{1,8\}\)'`\" \
+		-DREL=\"`expr 5.2 : '\(.\{1,8\}\)'`\" \
+		-DVER=\"`expr rl : '\(.\{1,8\}\)'`\" \
+		-DMACH=\"`expr mc68020 : '\(.\{1,8\}\)'`\" \
+		-DTIMESTAMP="\"`date`\"" \
+		23s/sys/PAGING/cf/name.c
+	loading unix
+	/usr/bin/patch_kernel unix 
+	/bin/size -x unix
+
+
+Size of unix:  0x5c178
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002db4      0x00000500         0x00000500
+	.text        0x000358e0      0x00004000         0x10000000
+	.data        0x0000eb34      0x0003a000         0x11000000
+	.bss         0x00014bb0      0x0004a000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/bin/nm -xev unix > unix.sym
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/udp_usrreq.c
+	loading bnet.o
+	loading bnetunix
+	/usr/bin/patch_kernel bnetunix 
+	/bin/size -x bnetunix
+
+
+Size of bnetunix:  0x7010c
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002dac      0x00000500         0x00000500
+	.text        0x00043804      0x00004000         0x10000000
+	.data        0x0000f3fc      0x00048000         0x11000000
+	.bss         0x0001a360      0x00058000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	loading nfsunix
+	/usr/bin/patch_kernel nfsunix 
+	/bin/size -x nfsunix
+
+
+Size of nfsunix:  0x79900
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002d84      0x00000500         0x00000500
+	.text        0x0004beb4      0x00004000         0x10000000
+	.data        0x00010294      0x00050000         0x11000000
+	.bss         0x0001a634      0x00062000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/bin/nm -xev nfsunix > nfsunix.sym

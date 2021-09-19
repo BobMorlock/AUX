@@ -1,0 +1,89 @@
+	/bin/cc \
+	-I.		 -I/usr/src/usr/include -I23s -c \
+		-DSYS=\"`expr unix : '\(.\{1,8\}\)'`\" \
+		-DNODE=\"`expr psn-pmmu : '\(.\{1,8\}\)'`\" \
+		-DREL=\"`expr 5.2 : '\(.\{1,8\}\)'`\" \
+		-DVER=\"`expr rl : '\(.\{1,8\}\)'`\" \
+		-DMACH=\"`expr mc68020 : '\(.\{1,8\}\)'`\" \
+		-DTIMESTAMP="\"`date`\"" \
+		23s/sys/PAGING/cf/name.c
+	loading unix
+	/usr/bin/patch_kernel unix 
+	/bin/size -x unix
+
+
+Size of unix:  0x5c15c
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002db0      0x00000500         0x00000500
+	.text        0x000358cc      0x00004000         0x10000000
+	.data        0x0000eb30      0x0003a000         0x11000000
+	.bss         0x00014bb0      0x0004a000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/bin/nm -xev unix > unix.sym
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NET/sys/route.c
+"23s/sys/NET/sys/route.c", line 294: warning: illegal pointer/integer combination, op =
+"23s/sys/NET/sys/route.c", line 304: warning: illegal pointer/integer combination, op =
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NET/sys/socket.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NET/sys/socket2.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NET/sys/sys_socket.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NET/sys/uipc_mbuf.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NET/sys/uipc_proto.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/if_ether.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/if_loop.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/in.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/in_pcb.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/in_proto.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/ip_icmp.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/ip_input.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/ip_output.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/raw_ip.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/tcp_debug.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/tcp_input.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/tcp_output.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/tcp_subr.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/tcp_timer.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/tcp_usrreq.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NETinet/sys/udp_usrreq.c
+	loading bnet.o
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/psn/cf/bnetconf.c
+	/lib/cpp -P -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s 23s/sys/psn/ml/bnetivec.s > bnetivec.i
+	/bin/as -o bnetivec.o bnetivec.i
+	rm -f bnetivec.i
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -c 23s/sys/psn/io/if_ae6.c
+	loading bnetunix
+	/usr/bin/patch_kernel bnetunix 
+	/bin/size -x bnetunix
+
+
+Size of bnetunix:  0x6fea0
+
+	Section         Size      Physical Address    Virtual Address
+
+	pstart       0x00002da4      0x00000500         0x00000500
+	.text        0x00043618      0x00004000         0x10000000
+	.data        0x0000f384      0x00048000         0x11000000
+	.bss         0x0001a360      0x00058000         0x12000000
+	MODULES      0x00000400      0x00000000         0x00000000
+	/lib/cpp -P -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s 23s/sys/PAGING/ml/nfsmch.s > nfsmch.i
+	/bin/as -o nfsmch.o nfsmch.i
+	rm -f nfsmch.i
+	/bin/ld -r -o nfspstart.o nfsmch.o	 clear.o		 local.o		 startup.o	 bnetuconfig.o	 umachdep.o
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NFS/sys/nfs_server.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NFS/sys/nfs_subr.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NFS/sys/nfs_vfsops.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NFS/sys/nfs_vnodeops.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/NFS/sys/nfs_xdr.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/auth_kern.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/auth_none.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/auth_uprot.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/clnt_kudp.c
+	/bin/cc -DKERNEL -Uvax -Usun -Dm68k -Dmc68020 -Dmc68881  -DINET -DSTREAMS -UQUOTA -DAUTOCONFIG -DSCREEN -DDVT   -DPAGING -DPMMU -DUMVSEG  -DNFS -I.		 -I/usr/src/usr/include -I23s  -f -Zn -O -c 23s/sys/RPC/sys/kudp_fsend.c
+"23s/sys/RPC/sys/kudp_fsend.c", line 123: if_addr undefined
+"23s/sys/RPC/sys/kudp_fsend.c", line 123: structure/union member required
+"23s/sys/RPC/sys/kudp_fsend.c", line 123: unacceptable operand of &
+"23s/sys/RPC/sys/kudp_fsend.c", line 123: cannot recover from earlier errors: goodbye!
+*** Error code 1
+
+Stop.
